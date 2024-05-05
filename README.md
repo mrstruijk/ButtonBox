@@ -40,7 +40,9 @@ At its core, a ButtonBox (or 'Job Agnostic Button Box', as it's full title is), 
 
 [USB-C connector](https://www.amazon.nl/dp/B0BB68QYV9?psc=1&ref=ppx_yo2ov_dt_b_product_details)
 
+### Etc
 
+Spacers, screws, (dupont) wires, shrinkwrap, etc. 
 
 
 
