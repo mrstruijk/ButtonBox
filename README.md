@@ -8,27 +8,39 @@ At its core, a ButtonBox (or 'Job Agnostic Button Box', as it's full title is), 
 
 ## Shopping list
 
-[100x60x25mm box](https://www.amazon.nl/dp/B0BWLR5D1G?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+### Core & Power
+
+[Box (100x60x25mm)](https://www.amazon.nl/dp/B0BWLR5D1G?psc=1&ref=ppx_yo2ov_dt_b_product_details)
 
 [Raspberry Pi Pico W](https://www.kiwi-electronics.com/nl/raspberry-pi-pico-w-10938?search=pi%20pico%20w)
 
-[Joystick](https://www.otronic.nl/nl/joystick-module.html)
+[DC power jack](https://www.otronic.nl/nl/dc-power-jack-female-55x21mm-dc-022-met-moer.html)
 
 [Step-down buck converter](https://www.otronic.nl/nl/step-down-buck-converter-van-45v-24v-naar-5v-3a-4r.html)
 
-[DC power jack](https://www.otronic.nl/nl/dc-power-jack-female-55x21mm-dc-022-met-moer.html)
+[1N4001 rectifier diodes (2)](https://www.kiwi-electronics.com/nl/1n4001-diode-10-stuks-395?search=diode)
 
-[2 on-off-on tilt switches](https://www.amazon.nl/dp/B07SPYDVKH?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+### On front
 
-[on-off tilt switch](https://www.amazon.nl/Tuimelschakelaar-Posities-Voertuig-Dashboard-donkerblauw/dp/B0B56S4F1X/ref=sr_1_8?crid=3L6O8K6EK71SE&dib=eyJ2IjoiMSJ9.v541vdw9z-Gsqdh63qAZiGlg7uDVmMBUlbHnGP08O9RVf6p69ldrgtE4g8KSn__hcIeClaAKK7l0NInLeZSTqhHTJH_CTCyFxiU86x4GiNtJAcv-CBNYzTlAGA8MGanajAq-M7Wx2oSaMFku316TlYI3Jl63k6DqbG3dl0X_E35wuIV5jSb1N-itHESdDXuHGwFZfaqp0tnV1S0dEGDBXrJOz8KWfNPMw6UnDviX2oBF_mWYNg1REdci168dECjyM3zp5A3axiMomMmJssktsKRl_-8XIAT4jtMP7ecEo7A.5pwQPmhQj2k5DSSFwV4-vspxP1Y051O7QYNprQhyL3c&dib_tag=se&qid=1714934226&sprefix=spst,aps,103)
+[SPST on-off tilt switch](https://www.amazon.nl/Tuimelschakelaar-Posities-Voertuig-Dashboard-donkerblauw/dp/B0B56S4F1X/ref=sr_1_8?crid=3L6O8K6EK71SE&dib=eyJ2IjoiMSJ9.v541vdw9z-Gsqdh63qAZiGlg7uDVmMBUlbHnGP08O9RVf6p69ldrgtE4g8KSn__hcIeClaAKK7l0NInLeZSTqhHTJH_CTCyFxiU86x4GiNtJAcv-CBNYzTlAGA8MGanajAq-M7Wx2oSaMFku316TlYI3Jl63k6DqbG3dl0X_E35wuIV5jSb1N-itHESdDXuHGwFZfaqp0tnV1S0dEGDBXrJOz8KWfNPMw6UnDviX2oBF_mWYNg1REdci168dECjyM3zp5A3axiMomMmJssktsKRl_-8XIAT4jtMP7ecEo7A.5pwQPmhQj2k5DSSFwV4-vspxP1Y051O7QYNprQhyL3c&dib_tag=se&qid=1714934226&sprefix=spst,aps,103)
 
-[2 mini jack TRRS connectors](https://www.amazon.nl/dp/B089222S84?psc=1&ref=ppx_yo2ov_dt_b_product_details) (with [male plugs](https://www.amazon.nl/dp/B0C276YP29?psc=1&ref=ppx_yo2ov_dt_b_product_details) for the other side)
+[SPDT on-off-on tilt switches (2)](https://www.amazon.nl/dp/B07SPYDVKH?psc=1&ref=ppx_yo2ov_dt_b_product_details)
 
-[USB-C connector](https://www.amazon.nl/dp/B0BB68QYV9?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+### On top
+
+[Mini OLED display 128x64 I2C](https://www.otronic.nl/nl/mini-oled-display-geel-blauw-096-inch-128x64-i2c.html)
+
+[Joystick](https://www.otronic.nl/nl/joystick-module.html)
 
 [Rotary encoder KY-040](https://www.amazon.nl/dp/B07T3672VK?psc=1&ref=ppx_yo2ov_dt_b_product_details)
 
-[2 1N4001 rectifier diodes](https://www.kiwi-electronics.com/nl/1n4001-diode-10-stuks-395?search=diode)
+### IO connectors
+
+[Mini jack TRRS connectors (2)](https://www.amazon.nl/dp/B089222S84?psc=1&ref=ppx_yo2ov_dt_b_product_details) (with [male plugs](https://www.amazon.nl/dp/B0C276YP29?psc=1&ref=ppx_yo2ov_dt_b_product_details) for the other side)
+
+[USB-C connector](https://www.amazon.nl/dp/B0BB68QYV9?psc=1&ref=ppx_yo2ov_dt_b_product_details)
+
+
 
 
 
