@@ -53,7 +53,7 @@ A few things to keep in mind when building:
 - A step-down buck converter isn't strictly necessary, as long as you can be sure that you're only ever supplying 5V. In the current build, the converter is there as a safety net: you can accidentally attach higher voltages without frying the system. 
 - Use diodes to keep the current flowing in one direction only. This is useful for when it's connected to both external power, and via the micro-USB of the Pico. 
 - There is also a diode from the buck converter to the USB-C port, since in this build the 5V of the USB-C is only used to power an external device, not to power the Pico. 
-
+- The TRRS mini jack connectors have 3 leads to GPIO, and one lead to ground. I didn't have good experiences with providing power over the same connector (since this shorted my system when repeatedly re-plugging it when powered on).
 
 ## Future plans
 
