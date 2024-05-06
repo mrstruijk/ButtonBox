@@ -44,7 +44,22 @@ At its core, a ButtonBox (or 'Job Agnostic Button Box', as it's full title is), 
 
 Spacers, screws, (dupont) wires, shrinkwrap, etc. 
 
+## Building
 
+A few things to keep in mind when building:
+
+- Plan the joystick connection early on. The Pico has three accessible ADC pins, and the joystick needs two of them (for x and y axis). 
+- Other than that, the precise pin-layout of the build isn't too important. Connect your devices wherever is convenient, and adjust the pins in the corresponding Python modules. 
+- A step-down buck converter isn't strictly necessary, as long as you can be sure that you're only ever supplying 5V. In the current build, the converter is there as a safety net: you can accidentally attach higher voltages without frying the system. 
+- Use diodes to keep the current flowing in one direction only. This is useful for when it's connected to both external power, and via the micro-USB of the Pico. 
+- There is also a diode from the buck converter to the USB-C port, since in this build the 5V of the USB-C is only used to power an external device, not to power the Pico. 
+
+
+## Future plans
+
+I plan to use the buttonbox with other electronics projects, such as the aforementioned robot arm. I will update the code accordingly. 
+
+The 'main' branch will remain fairy agnostic to what the box is actually doing, but I will update it with useful bits and pieces. Some obvious enhancement will be the inclusion of WiFi and BlueTooth capabilities. 
 
 ## Inspiration
 
