@@ -7,7 +7,9 @@
 
 The aim of this device was to have something that can easily interface with other small projects, such as this  [Servo Robot Arm](https://ls.codetech.nl/shops/346407/files/420569260/otronic-robot-arm-exclusief-servomotors.jpg).
 
-At its core, a ButtonBox (or 'Job Agnostic Button Box', as it's full title is), is a collection of input and output devices all hooked up to a single microcontroller. The microcontroller has some standard libraries and functions for operating those inputs and outputs, and is easily accessible for extending its software. Connecting the box to other devices can be done via common connectors such as USB or jackplugs. Down below is described in more detail what this specific box is made of, but in reality these details don't matter too much. The important idea is to have convenient input, output, and extensibility.
+At its core, a ButtonBox (or 'Job Agnostic Button Box', as it's full title is), is a collection of input and output devices all hooked up to a single microcontroller. The microcontroller has some standard libraries and functions for operating those inputs and outputs, and is easily accessible for extending its software. Connecting the box to other devices can be done via common connectors such as USB or jackplugs. 
+
+Down below is described in more detail what this specific box is made of, but in reality these details don't matter too much. The important idea is to have convenient input, output, and extensibility.
 
 ## Shopping list
 
