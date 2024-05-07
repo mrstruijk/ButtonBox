@@ -8,16 +8,16 @@ import monitor
 from rotary import Rotary
 import switches
 import led
-from jack import Jack
+from jackPWM import JackPWM
 
 
 class PWMControl(Interface):
 
     def __init__(self):
-        self.left_jack = Jack("L")
-        self.c_jack = Jack("C")
-        self.right_jack = Jack("R")
-        self.c_jack.write()
+        self.left_jack = JackPWM("L")
+        self.c_jack = JackPWM("C")
+        self.c_jack.set_frequency(50)
+        self.right_jack = JackPWM("R")
         self.button_left = ButtonHandler(20, Pin.PULL_UP)  # This one doesn't work with PULL_DOWN
         self.button_right = ButtonHandler(10, Pin.PULL_DOWN)  # This one handles either
         self.rotary = Rotary()
@@ -27,19 +27,18 @@ class PWMControl(Interface):
         self.button_left.subscribe_pressed(self.left_pressed)
         self.button_left.subscribe_released(self.left_released)
         self.rotary.subscribe(self.rotary_changed)
+        self.pwm_value = 0
         led.initialize()
 
     def left_pressed(self):
-        self.c_jack.write()
-        state = self.c_jack.start_pwm(4500)
+        state = self.c_jack.set_duty_cycle(2000)
         monitor.bool_event("C write " + str(state))
 
     def left_released(self):
         pass
 
     def right_pressed(self):
-        self.c_jack.write()
-        state = self.c_jack.start_pwm(0)
+        state = self.c_jack.set_duty_cycle(4000)
         monitor.bool_event("C " + str(state))
 
     def right_released(self):
@@ -48,11 +47,13 @@ class PWMControl(Interface):
     def rotary_changed(self, value):
         print(value)
         self.rotary_value = value
-
+        self.pwm_value = 350 * value
+        self.c_jack.set_duty_cycle(self.pwm_value)
 
     def step(self):
         try:
             while True:
+                
                 x = joystick.get_x()
                 y = joystick.get_y()
 
@@ -60,7 +61,7 @@ class PWMControl(Interface):
                 self.rotary.check_value()
                 
                 monitor.display(str(x) + " " + str(y), str(switch), str(self.rotary_value))
-
+                
                 time.sleep(0.1)
         except KeyboardInterrupt:
             pass  # Handle keyboard interrupt without additional action here

@@ -1,36 +1,60 @@
-from machine import Pin, PWM
+from machine import Pin
 
 class Jack:
     def __init__(self, jack):
-        if jack == 'L':
-            self.pins = {'t': Pin(3), 'r': Pin(4), 's': Pin(2)}
-        elif jack == 'R':
-            self.pins = {'t': Pin(7), 'r': Pin(8), 's': Pin(6)}
-        elif jack == 'C':
-            self.pins = {'plus': Pin(21), 'min': Pin(22)}
+        if jack == 'L':  # Left (ground is brown)
+            self.pins = {
+                't': Pin(3),  # Green wire
+                'r': Pin(4),  # White wire
+                's': Pin(2)   # Purple wire
+            }
+        elif jack == 'R':  # Right (ground is brown)
+            self.pins = {
+                't': Pin(7),  # Green wire
+                'r': Pin(8),  # White wire
+                's': Pin(6)   # Purple wire
+            }
+        elif jack == 'C':  # USB-C (red is 5v, brown is ground)
+            self.pins = {
+                'plus': Pin(21),  # Orange wire
+                'min': Pin(22)    # Green wire
+            }
         else:
-            raise ValueError("Invalid interface type. Choose 'L', 'R', or 'C'.")
+            raise ValueError("Invalid interface type. Choose 'L' (for Left jack), 'R' (for Right jack), or 'C' (for USB-C port).")
 
-        self.pwms = {key: PWM(pin) for key, pin in self.pins.items()}
         self.toggle_state = False
 
-    def set_pin_mode(self, pin, mode, pull=None):
-        pin.init(mode=mode, pull=pull)
+    @staticmethod
+    def set_pin_mode(pin, mode, pull=None):
+        if pull:
+            pin.init(mode=mode, pull=pull)
+        else:
+            pin.init(mode=mode)
+
+    def _read(self, pin, pull=None):
+        self.set_pin_mode(pin, Pin.IN, pull)
+        return pin.value()
+
+    def _write(self, pin):
+        self.set_pin_mode(pin, Pin.OUT)
+        pin.on()
+
+    def _off(self, pin):
+        self.set_pin_mode(pin, Pin.OUT)
+        pin.off()
 
     def read(self, pull=None):
-        results = {k: self.set_pin_mode(v, Pin.IN, pull) or v.value() for k, v in self.pins.items()}
+        results = {k: self._read(v, pull) for k, v in self.pins.items()}
         print(f"Read {self.__class__.__name__}:", results)
 
     def write(self):
         for pin in self.pins.values():
-            self.set_pin_mode(pin, Pin.OUT)
-            pin.on()
+            self._write(pin)
         print(f"{self.__class__.__name__} on")
 
     def off(self):
         for pin in self.pins.values():
-            self.set_pin_mode(pin, Pin.OUT)
-            pin.off()
+            self._off(pin)
         print(f"{self.__class__.__name__} off")
 
     def toggle_write(self):
@@ -41,29 +65,5 @@ class Jack:
         self.toggle_state = not self.toggle_state
         return str(self.toggle_state)
 
-    def start_pwm(self, duty_cycle=512, frequency=1000):
-        for pwm in self.pwms.values():
-            pwm.freq(frequency)
-            pwm.duty_u16(duty_cycle)
-        print(f"{self.__class__.__name__} PWM started with frequency {frequency}Hz and duty cycle {duty_cycle}")
-
-    def change_pwm_duty(self, duty_cycle):
-        for pwm in self.pwms.values():
-            pwm.duty_u16(duty_cycle)
-        print(f"{self.__class__.__name__} PWM duty cycle changed to {duty_cycle}")
-
-    def stop_pwm(self):
-        try:
-            for pwm in self.pwms.values():
-                pwm.deinit()
-            print(f"{self.__class__.__name__} PWM stopped")
-        except Exception as e:
-            print(f"Failed to stop PWM cleanly: {e}")
-
     def shutdown(self):
-        try:
-            self.stop_pwm()
-            self.off()
-        except Exception as e:
-            print(f"Failed to shutdown cleanly: {e}")
-
+        self.off()

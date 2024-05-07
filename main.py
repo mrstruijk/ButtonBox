@@ -18,8 +18,8 @@ def main():
             from _pwmcontrol import PWMControl
             module = PWMControl()
         elif position == 3:
-            from _module3 import Module3
-            module = Module3()
+            from pwm import PulseWidthModulation
+            module = PulseWidthModulation()
 
         if module:
             module_name = module.__class__.__name__
