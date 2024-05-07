@@ -10,7 +10,8 @@ import switches
 import led
 from jack import Jack
 
-class Combine(Interface):
+
+class PWMControl(Interface):
 
     def __init__(self):
         self.left_jack = Jack("L")
@@ -29,15 +30,17 @@ class Combine(Interface):
         led.initialize()
 
     def left_pressed(self):
-        state = self.left_jack.toggle_write()
-        monitor.bool_event("Left write " + state)
+        self.c_jack.write()
+        state = self.c_jack.start_pwm(4500)
+        monitor.bool_event("C write " + str(state))
 
     def left_released(self):
         pass
 
     def right_pressed(self):
-        state = self.right_jack.toggle_write()
-        monitor.bool_event("(W)right " + state)
+        self.c_jack.write()
+        state = self.c_jack.start_pwm(0)
+        monitor.bool_event("C " + str(state))
 
     def right_released(self):
         pass
@@ -45,6 +48,7 @@ class Combine(Interface):
     def rotary_changed(self, value):
         print(value)
         self.rotary_value = value
+
 
     def step(self):
         try:
@@ -59,11 +63,14 @@ class Combine(Interface):
 
                 time.sleep(0.1)
         except KeyboardInterrupt:
-            self.shutdown()
+            pass  # Handle keyboard interrupt without additional action here
         finally:
-            self.shutdown()
+            self.shutdown()  # Ensure shutdown is always called when exiting the loop
+    
+    
 
     def shutdown(self):
+        print("Initiating system shutdown...")
         try:
             self.button_right.unsubscribe(self.right_pressed)
             self.button_right.unsubscribe(self.right_released)
@@ -71,15 +78,24 @@ class Combine(Interface):
             self.button_left.unsubscribe(self.left_released)
             monitor.shutdown()
             led.shutdown()
-            self.left_jack.disable()
-            self.c_jack.disable()
-            self.right_jack.disable()
-            print("System shutdown completed.")
+            self.left_jack.shutdown()
+            self.c_jack.shutdown()
+            self.right_jack.shutdown()
         except Exception as e:
-            print("Error during shutdown:", e)
+            print(f"Error during shutdown: {e}")
+        finally:
+            print("System shutdown completed.")
 
 
-# The main execution block should be outside any class definitions
+    
+
 if __name__ == "__main__":
-    combine_instance = Combine()
-    combine_instance.step()
+    try:
+        _instance = PWMControl()
+        _instance.step()
+    except KeyboardInterrupt:
+        _instance.shutdown()
+    except Exception as e:
+        print(f"Unhandled exception: {e}")
+        if '_instance' in locals():
+            _instance.shutdown()

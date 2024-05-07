@@ -62,9 +62,9 @@ class Module3(Interface):
             self.button_left.unsubscribe(self.left_released)
             monitor.shutdown()
             led.shutdown()
-            self.left_jack.off()
-            self.c_jack.off()
-            self.right_jack.off()
+            self.left_jack.disable()
+            self.c_jack.disable()
+            self.right_jack.disable()
             print("System shutdown completed.")
         except Exception as e:
             print("Error during shutdown:", e)

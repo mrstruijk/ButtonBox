@@ -15,8 +15,8 @@ def main():
             from _combine import Combine
             module = Combine()
         elif position == 2:
-            from _module2 import Module2
-            module = Module2()
+            from _pwmcontrol import PWMControl
+            module = PWMControl()
         elif position == 3:
             from _module3 import Module3
             module = Module3()
