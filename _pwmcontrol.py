@@ -16,7 +16,6 @@ class PWMControl(Interface):
     def __init__(self):
         self.left_jack = JackPWM("L")
         self.c_jack = JackPWM("C")
-        self.c_jack.set_frequency(50)
         self.right_jack = JackPWM("R")
         self.button_left = ButtonHandler(20, Pin.PULL_UP)  # This one doesn't work with PULL_DOWN
         self.button_right = ButtonHandler(10, Pin.PULL_DOWN)  # This one handles either
@@ -27,35 +26,40 @@ class PWMControl(Interface):
         self.button_left.subscribe_pressed(self.left_pressed)
         self.button_left.subscribe_released(self.left_released)
         self.rotary.subscribe(self.rotary_changed)
-        self.pwm_value = 0
         led.initialize()
 
     def left_pressed(self):
-        state = self.c_jack.set_duty_cycle(2000)
-        monitor.bool_event("C write " + str(state))
+        monitor.bool_event("L pressed")
 
     def left_released(self):
         pass
 
     def right_pressed(self):
-        state = self.c_jack.set_duty_cycle(4000)
-        monitor.bool_event("C " + str(state))
+        monitor.bool_event("R pressed")
 
     def right_released(self):
         pass
 
     def rotary_changed(self, value):
-        print(value)
         self.rotary_value = value
-        self.pwm_value = 350 * value
-        self.c_jack.set_duty_cycle(self.pwm_value)
+        print(self.rotary_value)
+        self.left_jack.set_pin_angle('T', -self.rotary_value)
 
     def step(self):
         try:
             while True:
                 
                 x = joystick.get_x()
+                x += 1000
+                x = x // 2
+                x = (x // 100) * 4
+                self.left_jack.set_pin_angle('S', x)
+                
                 y = joystick.get_y()
+                y += 1000
+                y = y // 2
+                y = (y // 100) * 4
+                self.left_jack.set_pin_angle('R', y)
 
                 switch = switches.get_combined()
                 self.rotary.check_value()

@@ -1,59 +1,59 @@
 from machine import Pin, PWM
 
 class JackPWM:
-    def __init__(self, jack):
-        if jack == 'L':  # Left
-            self.pins = {
-                't': PWM(Pin(3)),  # Green wire
-                'r': PWM(Pin(4)),  # White wire
-                's': PWM(Pin(2))   # Purple wire
-            }
-        elif jack == 'R':  # Right
-            self.pins = {
-                't': PWM(Pin(7)),  # Green wire
-                'r': PWM(Pin(8)),  # White wire
-                's': PWM(Pin(6))   # Purple wire
-            }
-        elif jack == 'C':  # USB-C
-            self.pins = {
-                'plus': PWM(Pin(21)),
-                'min': PWM(Pin(22))    # Green wire
-            }
-        else:
+    def __init__(self, jack, freq = 50):
+        jack = jack.upper()
+        try:
+            if jack == 'L':  # Left
+                self.pins = {
+                    'T': PWM(Pin(3)),  # Green wire
+                    'R': PWM(Pin(4)),  # White wire
+                    'S': PWM(Pin(2))   # Purple wire
+                }
+            elif jack == 'R':  # Right
+                self.pins = {
+                    'T': PWM(Pin(7)),  # Green wire
+                    'R': PWM(Pin(8)),  # White wire
+                    'S': PWM(Pin(6))   # Purple wire
+                }
+            elif jack == 'C':  # USB-C
+                self.pins = {
+                    '+': PWM(Pin(21)),   # Orange wire
+                    '-': PWM(Pin(22))    # Green wire
+                }
+            self.frequency = freq
+            self.set_frequency(freq)
+        except:
             raise ValueError("Invalid interface type. Choose 'L' (for Left jack), 'R' (for Right jack), or 'C' (for USB-C port).")
 
     def set_frequency(self, frequency):
         for pwm in self.pins.values():
             pwm.freq(frequency)
 
-    def set_duty_cycle(self, duty, pin_key=None):
-        if pin_key:
-            if pin_key in self.pins:
-                self.pins[pin_key].duty_u16(duty)
-            else:
-                raise ValueError(f"No pin found with key {pin_key}")
+    def _duty_from_angle(self, angle):
+        duty_cycle = int((angle / 180) * (1000000 / self.frequency) + 2500)
+        return duty_cycle
+
+    def set_jack_angle(self, angle):
+        duty = self._duty_from_angle(angle)
+        for pwm in self.pins.values():
+            pwm.duty_u16(duty)
+
+    def set_pin_angle(self, pin_key, angle):
+        pin_key = pin_key.upper()
+        duty = self._duty_from_angle(angle)
+        if pin_key in self.pins:
+            self.pins[pin_key].duty_u16(duty)
         else:
-            for pwm in self.pins.values():
-                pwm.duty_u16(duty)
+            raise ValueError(f"No pin found with key {pin_key}")
 
-    def on(self):
-        # Setting duty cycle to max (assuming 10-bit resolution, max value is 1023)
-        self.set_duty_cycle(1023)
+    def pin_zero(self, pin_key):
+        pin_key = pin_key.upper()
+        self.set_pin_angle(pin_key, 0)
 
-    def off(self):
+    def jack_zero(self):
         # Setting duty cycle to 0
-        self.set_duty_cycle(0)
+        self.set_jack_angle(0)
 
-    def toggle(self, pin_key):
-        # This will toggle the state of a specific pin
-        pwm = self.pins[pin_key]
-        current_duty = pwm.duty()
-        if current_duty > 0:
-            pwm.duty(0)
-        else:
-            pwm.duty(1023)  # Max value for 10-bit
-
-    def cleanup(self):
-        # To ensure all PWM are off before exiting
-        self.off()
-
+    def shutdown(self):
+        self.jack_zero()  # To ensure all PWM are off before exiting

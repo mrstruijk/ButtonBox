@@ -3,13 +3,13 @@ from machine import Pin
 led = Pin("LED", Pin.OUT)
 
 def initialize():
-    on()
+    turn_on()
 
-def on():
+def turn_on():
     led.on()
 
-def off():
-    led._off()
+def turn_off():
+    led.off()
 
 def shutdown():
-    led._off()
+    led.jack_zero()
