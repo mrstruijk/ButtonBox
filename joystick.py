@@ -1,6 +1,7 @@
 from machine import Pin, ADC
 from buttonhandler import ButtonHandler
 
+
 x_pin = ADC(Pin(26))
 y_pin = ADC(Pin(27))
 
@@ -16,16 +17,16 @@ def capped_value(value):
         value = 1000
     return value
 
+def _get(axis):
+    mapped = map_value(axis, 350, 65535, -1000, 1000)
+    capped = capped_value(mapped)
+    rounded = round(capped)
+    return rounded
+
 def get_x():
-    x_axis = x_pin.read_u16()
-    mapped_x = map_value(x_axis, 350, 65535, -1000, 1000)
-    capped_x = capped_value(mapped_x)
-    rounded_x = round(capped_x)
-    return rounded_x
+    return _get(x_pin.read_u16())
+
 
 def get_y():
-    y_axis = y_pin.read_u16()
-    mapped_y = map_value(y_axis, 350, 65535, -1000, 1000)
-    capped_y = capped_value(mapped_y)
-    rounded_y = round(capped_y)
-    return rounded_y
+    return _get(y_pin.read_u16())
+

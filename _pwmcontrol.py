@@ -9,6 +9,7 @@ from rotary import Rotary
 import switches
 import led
 from jackPWM import JackPWM
+from servo import Servo
 
 
 class PWMControl(Interface):
